@@ -9,18 +9,8 @@
 #include <sys/time.h>
 #include "structures.h"
 
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-extern double wallclock();
-extern void azzero(double *d, const int n);
-extern double pbc(double x, const double boxby2);
-
-#ifdef __cplusplus
-}
-#endif
+double wallclock();
+void azzero(double *d, const int n);
+double pbc(double x, const double boxby2);
 
 #endif
