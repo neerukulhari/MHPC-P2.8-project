@@ -293,6 +293,14 @@ TEST(VelVerletTest, TwoParticleInsideCutoff) {
     EXPECT_NEAR(sys.vy[1], 0.04106, 1e-5);
     EXPECT_NEAR(sys.vz[1], 0.04106, 1e-5);
 
+    /* forces updated */
+    EXPECT_NEAR(sys.fx[0], -146.27311, 1e-5);
+    EXPECT_NEAR(sys.fy[0], -146.27311, 1e-5);
+    EXPECT_NEAR(sys.fz[0], -146.27311, 1e-5);
+    EXPECT_NEAR(sys.fx[1], 146.27311, 1e-5);
+    EXPECT_NEAR(sys.fy[1], 146.27311, 1e-5);
+    EXPECT_NEAR(sys.fz[1], 146.27311, 1e-5);
+
     /* free the memory */
     free(sys.rx);
     free(sys.ry);
