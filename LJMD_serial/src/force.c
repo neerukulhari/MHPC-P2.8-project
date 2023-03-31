@@ -6,7 +6,6 @@ void force(mdsys_t *sys)
     double r,ffac;
     double rx,ry,rz;
     int i,j;
-    
 
     /* zero energy and forces */
     sys->epot=0.0;
@@ -41,4 +40,3 @@ void force(mdsys_t *sys)
         }
     }
 }
-
