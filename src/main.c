@@ -7,7 +7,12 @@
 //#include "variables.h"
 #include "prototypes.h"
 #include "utilities.h"
+// if denined openmp we passs external the number of threads
+#ifdef _OPENMP
+#include <omp.h>  
 
+//int Nthreads = atoi(argv[1]);
+#endif
 /* main */
 int main(int argc, char **argv)
 {
@@ -76,7 +81,7 @@ int main(int argc, char **argv)
     /* initialize forces and energies.*/
     sys.nfi=0;
     force(&sys);
-    ekin(&sys);
+    ekin(&sys); //ekin(%&sys, Nthreads)
 
     erg=fopen(ergfile,"w");
     traj=fopen(trajfile,"w");
@@ -99,7 +104,7 @@ int main(int argc, char **argv)
 
         /* propagate system and recompute energies */
         velverlet(&sys);
-        ekin(&sys);
+        ekin(&sys); //ekin(%&sys, Nthreads)
     }
     /**************************************************/
 
