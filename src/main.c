@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     }
 
     #ifdef _MPI
+    /* broadcast from rank 0 to all other ranks */
     MPI_Bcast(&sys.natoms, 1, MPI_INT, 0, MPI_COMM_WORLD);
     MPI_Bcast(&sys.mass, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(&sys.epsilon, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -94,17 +95,13 @@ int main(int argc, char **argv)
             azzero(sys.fx, sys.natoms);
             azzero(sys.fy, sys.natoms);
             azzero(sys.fz, sys.natoms);
-            #ifdef _MPI
-            azzero(sys.cx, sys.natoms);
-            azzero(sys.cy, sys.natoms);
-            azzero(sys.cz, sys.natoms);
-            #endif
         } else {
             perror("cannot read restart file");
             return 3;
         }
     }
     #ifdef _MPI
+    /* broadcast from rank 0 to all other ranks */
     MPI_Bcast(sys.rx, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(sys.ry, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(sys.rz, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -117,8 +114,8 @@ int main(int argc, char **argv)
     sys.nfi=0;
     force(&sys);
 
-    ekin(&sys);
     if (sys.mpirank==0) {
+        ekin(&sys);
 
         erg=fopen(ergfile,"w");
         traj=fopen(trajfile,"w");
@@ -142,7 +139,8 @@ int main(int argc, char **argv)
 
         /* propagate system and recompute energies */
         velverlet(&sys);
-        ekin(&sys);
+        if (sys.mpirank==0) ekin(&sys);
+
     }
     /**************************************************/
     if (sys.mpirank==0) {
