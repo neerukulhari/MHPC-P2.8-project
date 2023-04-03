@@ -14,3 +14,11 @@ sh ../LJMD_serial/tests/check_argon2916.sh
 ```
 
 The result should print **"The argon_# simulation was executed without errors."**
+
+# To compile and run the tests
+Go to the build directory, compile the test files and run it:
+```bash
+cd build
+g++ -std=c++17 $(ls ../src/*.c | grep -v 'main.c') ../tests/*.cpp -I../include -L../include -lgtest -lgtest_main -pthread -o test.x
+./test.x
+```
