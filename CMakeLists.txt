@@ -8,6 +8,8 @@ set(CMAKE_C_FLAGS "-Wall -g -O3 -ffast-math -fomit-frame-pointer -DLJMD_VERSION=
 add_subdirectory(Obj-serial)
 add_subdirectory(examples)
 
+add_subdirectory(LJMD_serial)
+
 # define target for make serial
 add_custom_target(serial
     COMMAND make
