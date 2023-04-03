@@ -1,26 +1,50 @@
-This package contains simplified MD code with multi-threading
-parallelization for simulating atoms with a Lennard-Jones potential.
+# To compile using cmake
 
-The bundled makefiles are set up to compile the executable once
-with OpenMP disabled and once with OpenMP enabled with each build
-placing the various object files in separate directories.
-
-The examples directory contains 3 sets of example input decks
-and the reference directory the corresponding outputs.
-
-Type: make
-to compile everything and: make clean
-to remove all compiled objects
-
-# Using `cmake`
-To compile using `cmake` follow the steps: 
 ```bash
-mkdir build 
+mkdir build
 cd build
 cmake ..
-cmake --build
+cmake --build .
 ```
 
-- `make` or `make serial` to compile everything
-- `ctest` to run the tests (or `make check` to check with the examples)
-- `make clean` to remove all compiled files
+## Cmake options:
+```bash
+make 
+make serial 
+make parallel
+make check
+```
+
+To use the cmake tests:
+```bash
+cd examples
+ctest
+```
+
+
+# Old README
+
+To compile without a make file do the following:
+
+```bash
+mkdir build
+cd build
+gcc ../src/*.c -I ../include -L ../include -o ljmd-serial.x -DLJMD_VERSION=1.0 -lm
+```
+
+Then to test if it runs correctly go to the examples folder and run the tests:
+```bash
+cd ../../examples
+sh ../LJMD_serial/tests/check_argon108.sh
+sh ../LJMD_serial/tests/check_argon2916.sh
+```
+
+The result should print **"The argon_# simulation was executed without errors."**
+
+# To compile and run the tests
+Go to the build directory, compile the test files and run it:
+```bash
+cd build
+g++ -std=c++17 $(ls ../src/*.c | grep -v 'main.c') ../tests/*.cpp -I../include -L../include -lgtest -lgtest_main -pthread -o test.x
+./test.x
+```
