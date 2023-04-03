@@ -30,22 +30,24 @@ add_custom_target(clean_ex COMMAND ${CMAKE_COMMAND} -E remove -f *.xyz *.dat
 # The check target was done to be compatible with the old makefile. 
 # We will use the CTest framework to run the tests.
 enable_testing()
-add_test(NAME Argon108-serial
-    COMMAND ../ljmd-serial.x < argon_108.inp &&  sh ${PROJECT_SOURCE_DIR}/tests/check_argon108.sh)
-set_tests_properties(Argon108-serial
-        PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_108 simulation was executed without errors..*")
 
 add_test(NAME Argon108
-    COMMAND ../ljmd.x < argon_108.inp && sh ${PROJECT_SOURCE_DIR}/tests/check_argon108.sh)
+    COMMAND sh ${PROJECT_SOURCE_DIR}/tests/check_argon.sh ../ljmd.x argon_108)
 set_tests_properties(Argon108
     PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_108 simulation was executed without errors..*")
 
 add_test(NAME Argon2916
-    COMMAND ../ljmd.x < argon_2916.inp && sh ${PROJECT_SOURCE_DIR}/tests/check_argon2916.sh)
+    COMMAND sh ${PROJECT_SOURCE_DIR}/tests/check_argon.sh ../ljmd.x argon_2916)
 set_tests_properties(Argon2916
         PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_2916 simulation was executed without errors..*")
 
-add_test(NAME Argon2916-serial
-    COMMAND ../ljmd-serial.x < argon_2916.inp && sh ${PROJECT_SOURCE_DIR}/tests/check_argon2916.sh)
-set_tests_properties(Argon2916-serial
-        PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_2916 simulation was executed without errors..*")
+# Don't run the serial tests, they are just for reference
+# add_test(NAME Argon108-serial
+#     COMMAND sh ${PROJECT_SOURCE_DIR}/tests/check_argon.sh ../ljmd.x argon_108)
+# set_tests_properties(Argon108-serial
+#         PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_108 simulation was executed without errors..*")
+
+# add_test(NAME Argon2916-serial
+#     COMMAND sh ${PROJECT_SOURCE_DIR}/tests/check_argon.sh ../ljmd-serial.x argon_2916)
+# set_tests_properties(Argon2916-serial
+#         PROPERTIES PASS_REGULAR_EXPRESSION ".*The argon_2916 simulation was executed without errors..*")
