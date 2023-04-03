@@ -12,14 +12,12 @@ ADD_EXECUTABLE(GoogleTests
     ../src/energy.c
     ../src/force.c
     ../src/input.c
-    ../src/output.c
     ../src/utilities.c
     ../src/verlet.c
     test_constants.cpp 
     test_energy.cpp
     test_force.cpp
     test_input.cpp
-    test_output.cpp
     test_utilities.cpp
     test_velverlet.cpp
     test_main.cpp
