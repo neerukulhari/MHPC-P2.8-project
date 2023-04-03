@@ -11,6 +11,11 @@
 #include <string.h>
 #include <sys/time.h>
 
+/* this is needed to make the functions compatible with Googletest */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //IO functions
 int get_a_line(FILE *fp, char *buf);
 void output(mdsys_t *sys, FILE *erg, FILE *traj);
@@ -24,4 +29,7 @@ void ekin(mdsys_t *sys);
 //Verlet functions
 void velverlet(mdsys_t *sys);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
