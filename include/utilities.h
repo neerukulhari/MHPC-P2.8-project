@@ -9,8 +9,16 @@
 #include <sys/time.h>
 #include "structures.h"
 
+/* this is needed to make the functions compatible with Googletest */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 double wallclock();
 void azzero(double *d, const int n);
 double pbc(double x, const double boxby2);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
