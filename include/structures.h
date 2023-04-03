@@ -10,6 +10,9 @@ struct _mdsys {
     double *rx, *ry, *rz;
     double *vx, *vy, *vz;
     double *fx, *fy, *fz;
+    /* added for MPI */
+    double *cx, *cy, *cz; 
+    int mpirank, nsize, mpicomm;
 };
 typedef struct _mdsys mdsys_t;
 

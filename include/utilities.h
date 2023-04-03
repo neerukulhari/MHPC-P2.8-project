@@ -9,6 +9,12 @@
 #include <sys/time.h>
 #include "structures.h"
 
+#ifdef USE_MPI
+#include <mpi.h>
+#endif
+
+void fill_mpi_struct(mdsys_t *sys);
+
 /* this is needed to make the functions compatible with Googletest */
 #ifdef __cplusplus
 extern "C" {
