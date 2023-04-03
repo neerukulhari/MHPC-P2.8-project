@@ -47,14 +47,16 @@ add_custom_target(parallel
 )
 
 
-# define target for cleaning
-add_custom_target(clean COMMAND rm -f *.mod *.o *.x)
-# define target for checking
+# # define target for cleaning
+# add_custom_target(clean COMMAND rm -f *.mod *.o *.x)
+# # define target for checking
 
-add_custom_target(check
-    DEPENDS ljmd-serial.x
-    COMMAND ${CMAKE_MAKE_PROGRAM} -C examples check
-)
+# # add check target
+# add_custom_target(check
+# COMMAND sh ${PROJECT_SOURCE_DIR}/../tests/check_argon108.sh
+# COMMAND sh ${PROJECT_SOURCE_DIR}/../tests/check_argon2916.sh
+# )
+
 
 # The check target was done to be compatible with the old makefile. 
 # We will use the CTest framework to run the tests.
