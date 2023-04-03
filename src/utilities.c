@@ -31,7 +31,7 @@ double pbc(double x, const double boxby2)
 /* Fill the MPI struct parameters*/
 void fill_mpi_struct(mdsys_t *sys)
 {
-    #ifdef USE_MPI
+    #ifdef _MPI
     MPI_Comm_rank(MPI_COMM_WORLD, &(sys->mpirank));
     MPI_Comm_size(MPI_COMM_WORLD, &(sys->nsize));
     #else

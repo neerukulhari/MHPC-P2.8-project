@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include "structures.h"
 
-#ifdef USE_MPI
+#ifdef _MPI
 #include <mpi.h>
 #endif
 
