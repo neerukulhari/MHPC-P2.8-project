@@ -124,31 +124,31 @@ void force_optimized_3Law(mdsys_t* sys) {
 			/* compute force and energy if within cutoff */
 			if (rsq < rcsq) {
                 rinv = 1.0 / rsq;
-				r6 = rinv * rinv * rinv;
-				
-				ffac = 6.0* r6 * ( r6 * c12 * 2.0 - c6 ) * rinv;
+                r6 = rinv * rinv * rinv;
+
+                ffac = 6.0* r6 * ( r6 * c12 * 2.0 - c6 ) * rinv;
                 epot += r6 * (r6* c12 - c6);
-				                                
-            	F_x = ffac * rx;
+                                                
+                F_x = ffac * rx;
                 F_y = ffac * ry;
                 F_z = ffac * rz;
 
                 #ifdef _MPI
-            	sys->cx[i] += F_x;
-				sys->cx[j] -= F_x;
-				sys->cy[i] += F_y;
-				sys->cy[j] -= F_y;
-				sys->cz[i] += F_z;
-				sys->cz[j] -= F_z;
+                sys->cx[i] += F_x;
+                sys->cx[j] -= F_x;
+                sys->cy[i] += F_y;
+                sys->cy[j] -= F_y;
+                sys->cz[i] += F_z;
+                sys->cz[j] -= F_z;
                 #else
-            	sys->fx[i] += F_x;
-				sys->fx[j] -= F_x;
-				sys->fy[i] += F_y;
-				sys->fy[j] -= F_y;
-				sys->fz[i] += F_z;
-				sys->fz[j] -= F_z;
-				#endif
-				
+                sys->fx[i] += F_x;
+                sys->fx[j] -= F_x;
+                sys->fy[i] += F_y;
+                sys->fy[j] -= F_y;
+                sys->fz[i] += F_z;
+                sys->fz[j] -= F_z;
+                #endif
+
 			}
 		}
 	}
