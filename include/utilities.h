@@ -13,8 +13,6 @@
 #include <mpi.h>
 #endif
 
-void fill_mpi_struct(mdsys_t *sys);
-
 /* this is needed to make the functions compatible with Googletest */
 #ifdef __cplusplus
 extern "C" {
@@ -25,6 +23,8 @@ extern void azzero(double* d, const int n);
 extern double pbc(double x, const double boxby2);
 extern void allocate_mem(mdsys_t* const sys);
 extern void free_mem(mdsys_t* const sys);
+extern void fill_mpi_struct(mdsys_t *sys);
+extern void broadcast_r_v(mdsys_t *sys);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,9 @@
 #include "utilities.h"
 #include <sys/time.h>
 #include <time.h>
+#ifdef _MPI
+#include <mpi.h>
+#endif
 
 /* helper function: get current time in seconds since epoch */
 double wallclock() 
@@ -53,6 +56,13 @@ void allocate_mem(mdsys_t* const sys)
 	sys->fy = (double*)malloc(sys->natoms * sizeof(double));
 	sys->fz = (double*)malloc(sys->natoms * sizeof(double));
 
+	// Allocating forces of atoms for MPI
+    #ifdef _MPI
+    sys->cx=(double *)malloc(sys->natoms*sizeof(double));
+    sys->cy=(double *)malloc(sys->natoms*sizeof(double));
+    sys->cz=(double *)malloc(sys->natoms*sizeof(double));
+    #endif
+
 }
 
 /* free memory */
@@ -71,6 +81,14 @@ void free_mem(mdsys_t* const sys) {
 	free(sys->fx);
 	free(sys->fy);
 	free(sys->fz);
+
+	// free MPI forces
+    #ifdef _MPI
+    free(sys->cx);
+    free(sys->cy);
+    free(sys->cz);
+    MPI_Finalize();
+    #endif
 }
 
 /* Fill the MPI struct parameters*/
@@ -82,5 +100,18 @@ void fill_mpi_struct(mdsys_t *sys)
     #else
     sys->mpirank = 0;
     sys->mpisize = 1;
+    #endif
+}
+
+void broadcast_r_v(mdsys_t *sys)
+{
+    #ifdef _MPI
+    /* broadcast from rank 0 to all other ranks */
+    MPI_Bcast(sys->rx, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(sys->ry, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(sys->rz, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(sys->vx, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(sys->vy, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(sys->vz, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     #endif
 }
