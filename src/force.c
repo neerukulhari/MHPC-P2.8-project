@@ -6,11 +6,8 @@
 void force(mdsys_t *sys)
 {
     #ifdef _OPENMP
-      int Nthreads = omp_get_max_threads();
-    #else
-        int Nthreads = 1;
+    int Nthreads = omp_get_max_threads();
     #endif
-
     double r,ffac;
     double rx,ry,rz;
     int i,j;
@@ -21,7 +18,9 @@ void force(mdsys_t *sys)
     azzero(sys->fx,sys->natoms);
     azzero(sys->fy,sys->natoms);
     azzero(sys->fz,sys->natoms);
+    #ifdef _OPENMP
     #pragma omp parallel for num_threads(Nthreads) private(i,j,r,ffac,rx,ry,rz) reduction(+:epot)
+    #endif
     for(i=0; i < (sys->natoms); ++i) {
         for(j=0; j < (sys->natoms); ++j) {
 
