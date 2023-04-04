@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set compiler options
-set(CMAKE_C_FLAGS "-Wall -g -O3 -ffast-math -fomit-frame-pointer -DLJMD_VERSION=1.0 -D_OMP=1 -fopenmp")
+set(CMAKE_C_FLAGS "-Wall -g -O3 -ffast-math -fomit-frame-pointer -DLJMD_VERSION=1.0 -D_OMP=1 -fopenmp -D_MPI=1")
 
 # Add include directories
 include_directories(../include)
+
+# Add MPI support
+find_package(MPI REQUIRED)
+include_directories(${MPI_INCLUDE_PATH})
 
 # Create the library "ljmd-lib"
 add_library(ljdm-lib
@@ -20,7 +24,7 @@ add_library(ljdm-lib
 add_executable(ljmd.x ../src/main.c)
 
 # Link the library to the math library
-target_link_libraries(ljmd.x ljdm-lib m)
+target_link_libraries(ljmd.x ljdm-lib m ${MPI_LIBRARIES})
 
 set_target_properties(ljmd.x PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/..)
 
