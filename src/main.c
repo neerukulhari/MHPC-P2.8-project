@@ -7,15 +7,13 @@
 //#include "variables.h"
 #include "prototypes.h"
 #include "utilities.h"
-// if denined openmp we passs external the number of threads
 #ifdef _OPENMP
-#include <omp.h>  
-
-//int Nthreads = atoi(argv[1]);
+    #include <omp.h>
 #endif
 /* main */
 int main(int argc, char **argv)
-{
+{   
+
     int nprint, i;
     char restfile[BLEN], trajfile[BLEN], ergfile[BLEN], line[BLEN];
     FILE *fp,*traj,*erg;
@@ -66,6 +64,7 @@ int main(int argc, char **argv)
         for (i=0; i<sys.natoms; ++i) {
             fscanf(fp,"%lf%lf%lf",sys.rx+i, sys.ry+i, sys.rz+i);
         }
+
         for (i=0; i<sys.natoms; ++i) {
             fscanf(fp,"%lf%lf%lf",sys.vx+i, sys.vy+i, sys.vz+i);
         }
@@ -81,7 +80,7 @@ int main(int argc, char **argv)
     /* initialize forces and energies.*/
     sys.nfi=0;
     force(&sys);
-    ekin(&sys); //ekin(%&sys, Nthreads)
+    ekin(&sys);
 
     erg=fopen(ergfile,"w");
     traj=fopen(trajfile,"w");
@@ -96,6 +95,7 @@ int main(int argc, char **argv)
 
     /**************************************************/
     /* main MD loop */
+
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
 
         /* write output, if requested */
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 
         /* propagate system and recompute energies */
         velverlet(&sys);
-        ekin(&sys); //ekin(%&sys, Nthreads)
+        ekin(&sys);
     }
     /**************************************************/
 
