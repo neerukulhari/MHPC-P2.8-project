@@ -21,11 +21,9 @@ double wallclock()
 // Loop unrolling 2x2 is applied for step+=2
 void azzero(double* d, const int n) 
 {    
-    #ifdef _OPENMP
-    int Nthreads = omp_get_max_threads();
-    #endif
     int i;
     #ifdef _OPENMP
+    int Nthreads = omp_get_max_threads();
     #pragma omp parallel for num_threads(Nthreads) private(i)
     #endif
     for (i=0; i<n-1; i+=2) 
