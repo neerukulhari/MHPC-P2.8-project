@@ -38,11 +38,6 @@ int main(int argc, char **argv)
             fscanf(fp,"%lf%lf%lf",sys.vx+i, sys.vy+i, sys.vz+i);
         }
         fclose(fp);
-
-        // /* zero the forces */
-        // azzero(sys.fx, sys.natoms);
-        // azzero(sys.fy, sys.natoms);
-        // azzero(sys.fz, sys.natoms);
     } else {
         perror("cannot read restart file");
         return 3;
