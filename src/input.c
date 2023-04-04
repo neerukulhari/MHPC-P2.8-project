@@ -1,6 +1,9 @@
 #include "prototypes.h"
 #include "structures.h"
 #include "constants.h"
+#ifdef _MPI
+#include <mpi.h>
+#endif
 
 /* helper function: read a line and then return
    the first string with whitespace stripped off */
@@ -98,6 +101,19 @@ int add_data(FILE* fp,
 	if (get_a_line(fp, *line))
 		return 1;
 	*nprint = atoi(*line);
-
 	return 0;
+}
+
+void broadcast_data(mdsys_t* sys) {
+    #ifdef _MPI
+    /* broadcast from rank 0 to all other ranks */
+    MPI_Bcast(&sys->natoms, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->mass, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->epsilon, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->sigma, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->rcut, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->box, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->nsteps, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&sys->dt, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    #endif
 }

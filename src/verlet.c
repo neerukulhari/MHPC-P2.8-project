@@ -40,7 +40,7 @@ void velverlet_update(mdsys_t* sys)
 
 void velverlet(mdsys_t* sys) 
 {
-    velverlet_propagation(sys);  // Propagate velocities by half and positions by full step
+    if (sys->mpirank==0) velverlet_propagation(sys);  // Propagate velocities by half and positions by full step
     force_optimized_3Law(sys);   // Compute forces and potential energy
-    velverlet_update(sys); // Propagate velocities by another half step
+    if (sys->mpirank==0) velverlet_update(sys); // Propagate velocities by another half step
 }
