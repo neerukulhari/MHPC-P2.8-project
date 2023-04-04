@@ -33,9 +33,9 @@ void fill_mpi_struct(mdsys_t *sys)
 {
     #ifdef _MPI
     MPI_Comm_rank(MPI_COMM_WORLD, &(sys->mpirank));
-    MPI_Comm_size(MPI_COMM_WORLD, &(sys->nsize));
+    MPI_Comm_size(MPI_COMM_WORLD, &(sys->mpisize));
     #else
     sys->mpirank = 0;
-    sys->nsize = 1;
+    sys->mpisize = 1;
     #endif
 }

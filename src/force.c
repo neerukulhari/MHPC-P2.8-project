@@ -21,7 +21,7 @@ void force(mdsys_t *sys)
     MPI_Bcast(sys->rx, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(sys->ry, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(sys->rz, sys->natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    for(i=sys->mpirank; i < (sys->natoms); i += sys->nsize) {
+    for(i=sys->mpirank; i < (sys->natoms); i += sys->mpisize) {
     #else
     for(i=0; i < (sys->natoms); ++i) {
     #endif

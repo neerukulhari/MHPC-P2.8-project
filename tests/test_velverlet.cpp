@@ -8,7 +8,7 @@ TEST(VelVerletTest, TwoParticleInsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 2;
@@ -100,7 +100,7 @@ TEST(VelVerletTest, ThreeParticleInsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 3;
@@ -210,7 +210,7 @@ TEST(VelVerletTest, TwoParticleOutsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 2;
@@ -302,7 +302,7 @@ TEST(VelVerletTest, ThreeParticleOutsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 3;

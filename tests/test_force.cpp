@@ -8,7 +8,7 @@ TEST(ForceTest, TwoParticleInsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 2;
@@ -65,7 +65,7 @@ TEST(ForceTest, ThreeParticleInsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a three particle system */
     sys.natoms = 3;
@@ -128,7 +128,7 @@ TEST(ForceTest, TwoParticleOutsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a two particle system */
     sys.natoms = 2;
@@ -185,7 +185,7 @@ TEST(ForceTest, ThreeParticleOutsideCutoff) {
 
     /* test for 1 MPI process */
     sys.mpirank = 0;
-    sys.nsize = 1;
+    sys.mpisize = 1;
 
     /* set up a three particle system */
     sys.natoms = 3;
