@@ -30,6 +30,10 @@ To compile without a make file do the following:
 mkdir build
 cd build
 gcc ../src/*.c -I ../include -L ../include -o ljmd-serial.x -DLJMD_VERSION=1.0 -lm
+
+Optim
+-ffast-math -fexpensive-optimizations -msse3
+-O3 -ffast-math -fomit-frame-pointer -fexpensive-optimizations -msse3 -Wall
 ```
 
 Then to test if it runs correctly go to the examples folder and run the tests:

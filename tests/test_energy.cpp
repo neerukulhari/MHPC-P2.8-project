@@ -1,5 +1,5 @@
 // compute kinetic energy for given velocities and mass
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "prototypes.h"
 #include "constants.h"
 
