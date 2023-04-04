@@ -18,12 +18,12 @@ double wallclock()
 void azzero(double* d, const int n) 
 {    
     #ifdef _OPENMP
-      int Nthreads = omp_get_max_threads();
-    #else
-        int Nthreads = 1;
-     #endif
+    int Nthreads = omp_get_max_threads();
+    #endif
     int i;
+    #ifdef _OPENMP
     #pragma omp parallel for num_threads(Nthreads) private(i)
+    #endif
     for (i=0; i<n; ++i) 
 	{
         d[i]=0.0;
