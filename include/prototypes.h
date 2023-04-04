@@ -36,9 +36,6 @@ extern void velverlet_update(mdsys_t* sys);
 extern void velverlet_propagation(mdsys_t* sys);
 extern void velverlet(mdsys_t* sys);
 
-// extern void verlet_test_1(mdsys_t *sys);
-// extern void verlet_test_2(mdsys_t *sys);
-
 #ifdef __cplusplus
 }
 #endif

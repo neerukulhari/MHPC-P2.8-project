@@ -1,0 +1,24 @@
+Argon108 1 1.69615
+Argon2916 1 70.8287
+ConstantsTest.Boltzmann 1 0.00364411
+ConstantsTest.MVSQ2E 1 0.0035659
+EnergyTest.TwoParticleInsideCutoff 1 0.00409821
+EnergyTest.ThreeParticleInsideCutoff 1 0.00351502
+EnergyTest.TwoParticleOutsideCutoff 1 0.00494222
+EnergyTest.ThreeParticleOutsideCutoff 1 0.0035731
+ForceTest.TwoParticleInsideCutoff 1 0.00362459
+ForceTest.ThreeParticleInsideCutoff 1 0.00382313
+ForceTest.TwoParticleOutsideCutoff 1 0.00373528
+ForceTest.ThreeParticleOutsideCutoff 1 0.00326543
+InputTest.TextInput 1 0.00467037
+InputTest.EmptyInput 1 0.00476498
+InputTest.CommentInput 1 0.00365624
+InputTest.Argon108Input 1 0.00423987
+AzzeroTest.ZeroArray 1 0.00374527
+PBCTest.XisGreater 1 0.00343027
+PBCTest.XisSmaller 1 0.00321484
+VelVerletTest.TwoParticleInsideCutoff 1 0.0035491
+VelVerletTest.ThreeParticleInsideCutoff 1 0.00375002
+VelVerletTest.TwoParticleOutsideCutoff 1 0.00403029
+VelVerletTest.ThreeParticleOutsideCutoff 1 0.00333332
+---
