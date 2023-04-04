@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set compiler options
-set(CMAKE_C_FLAGS "-Wall -g -O3 -ffast-math -fomit-frame-pointer -DLJMD_VERSION=1.0")
+set(CMAKE_C_FLAGS "-Wall -g -O3 -ffast-math -fomit-frame-pointer -DLJMD_VERSION=1.0 -D_OMP=1 -fopenmp")
 
 # Add include directories
 include_directories(../include)
