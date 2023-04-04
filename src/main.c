@@ -26,29 +26,12 @@ int main(int argc, char **argv)
     t_start = wallclock();
 
     /* read input file */
-    add_data(stdin, &line, &restfile, &trajfile, &ergfile, &sys, &nprint);
-    #ifdef _MPI
-    /* broadcast from rank 0 to all other ranks */
-    MPI_Bcast(&sys.natoms, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.mass, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.epsilon, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.sigma, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.rcut, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.box, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.nsteps, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&sys.dt, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    #endif
+    if (sys.mpirank==0) add_data(stdin, &line, &restfile, &trajfile, &ergfile, &sys, &nprint);
+    broadcast_data(&sys);
 
     /* allocate memory */
 
     allocate_mem(&sys);
-
-    #ifdef _MPI
-    sys.cx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.cy=(double *)malloc(sys.natoms*sizeof(double));
-    sys.cz=(double *)malloc(sys.natoms*sizeof(double));
-    #endif
-
 
     if(sys.mpirank==0) {
         /* read restart */
@@ -69,15 +52,6 @@ int main(int argc, char **argv)
             return 3;
         }
     }
-    #ifdef _MPI
-    /* broadcast from rank 0 to all other ranks */
-    MPI_Bcast(sys.rx, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(sys.ry, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(sys.rz, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(sys.vx, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(sys.vy, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(sys.vz, sys.natoms, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    #endif
 
     /* initialize forces and energies.*/
     sys.nfi=0;
@@ -121,11 +95,5 @@ int main(int argc, char **argv)
     }
 
     free_mem(&sys);
-    #ifdef _MPI
-    free(sys.cx);
-    free(sys.cy);
-    free(sys.cz);
-    MPI_Finalize();
-    #endif
     return 0;
 }
