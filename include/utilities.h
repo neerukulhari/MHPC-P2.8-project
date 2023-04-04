@@ -14,9 +14,11 @@
 extern "C" {
 #endif
 
-double wallclock();
-void azzero(double *d, const int n);
-double pbc(double x, const double boxby2);
+extern double wallclock();
+extern void azzero(double* d, const int n);
+extern double pbc(double x, const double boxby2);
+extern void allocate_mem(mdsys_t* const sys);
+extern void free_mem(mdsys_t* const sys);
 
 #ifdef __cplusplus
 }

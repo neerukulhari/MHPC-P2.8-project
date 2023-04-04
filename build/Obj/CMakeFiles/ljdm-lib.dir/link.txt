@@ -1,0 +1,2 @@
+/usr/bin/ar qc libljdm-lib.a CMakeFiles/ljdm-lib.dir/__/src/constants.c.o CMakeFiles/ljdm-lib.dir/__/src/energy.c.o CMakeFiles/ljdm-lib.dir/__/src/force.c.o CMakeFiles/ljdm-lib.dir/__/src/input.c.o CMakeFiles/ljdm-lib.dir/__/src/output.c.o CMakeFiles/ljdm-lib.dir/__/src/utilities.c.o CMakeFiles/ljdm-lib.dir/__/src/verlet.c.o
+/usr/bin/ranlib libljdm-lib.a
