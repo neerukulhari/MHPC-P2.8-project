@@ -8,14 +8,14 @@
 void velverlet(mdsys_t *sys) 
 {
     #ifdef _OPENMP
-      int Nthreads = omp_get_max_threads();
-     #else
-        int Nthreads = 1;
+    int Nthreads = omp_get_max_threads();
     #endif
     int i;
 
     /* first part: propagate velocities by half and positions by full step */
-   #pragma omp parallel for num_threads(Nthreads) private(i)
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(Nthreads) private(i)
+    #endif
     for (i=0; i<sys->natoms; ++i) {
         sys->vx[i] += 0.5*sys->dt / mvsq2e * sys->fx[i] / sys->mass;
         sys->vy[i] += 0.5*sys->dt / mvsq2e * sys->fy[i] / sys->mass;
@@ -29,7 +29,9 @@ void velverlet(mdsys_t *sys)
     force(sys);
 
     /* second part: propagate velocities by another half step */
+    #ifdef _OPENMP
     #pragma omp parallel for num_threads(Nthreads) private(i)
+    #endif
     for (i=0; i<sys->natoms; ++i) {
         sys->vx[i] += 0.5*sys->dt / mvsq2e * sys->fx[i] / sys->mass;
         sys->vy[i] += 0.5*sys->dt / mvsq2e * sys->fy[i] / sys->mass;
