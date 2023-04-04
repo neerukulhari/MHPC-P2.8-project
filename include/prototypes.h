@@ -19,7 +19,8 @@ extern "C" {
 //IO functions
 extern int get_a_line(FILE* fp, char* buf);
 extern void output(mdsys_t* sys, FILE* erg, FILE* traj);
-int add_data(FILE * fp, char (*line)[BLEN], char (*restfile)[BLEN], char (*trajfile)[BLEN], char (*ergfile)[BLEN], mdsys_t * sys, int * nprint);
+extern int add_data(FILE * fp, char (*line)[BLEN], char (*restfile)[BLEN], char (*trajfile)[BLEN], char (*ergfile)[BLEN], mdsys_t * sys, int * nprint);
+extern void broadcast_data(mdsys_t *sys);
 
 //Force functions
 extern void force(mdsys_t *sys);
