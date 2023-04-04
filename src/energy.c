@@ -9,14 +9,14 @@
 void ekin(mdsys_t *sys)
 {
     #ifdef _OPENMP
-      int Nthreads = omp_get_max_threads();
-     #else
-    int Nthreads = 1;
+    int Nthreads = omp_get_max_threads();
     #endif
     int i;
     double ekin=0.0;
     sys->ekin=0.0;
+    #ifdef _OPENMP
     #pragma omp parallel for num_threads(Nthreads) private(i) reduction(+:ekin) 
+    #endif
     for (i=0; i<sys->natoms; ++i) {
         ekin += 0.5*mvsq2e*sys->mass*(sys->vx[i]*sys->vx[i] + sys->vy[i]*sys->vy[i] + sys->vz[i]*sys->vz[i]);
     }
