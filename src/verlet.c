@@ -44,22 +44,3 @@ void velverlet(mdsys_t* sys)
     force_optimized_3Law(sys);   // Compute forces and potential energy
     velverlet_update(sys); // Propagate velocities by another half step
 }
-
-
-// void verlet_test_1(mdsys_t* sys) {
-// 	int i;
-
-// 	for (i = 0; i < sys->natoms; ++i) {
-// 		sys->vx[i] += 0.5 * sys->fx[i] / sys->mass;
-// 		sys->rx[i] += sys->vx[i];
-// 	}
-// }
-
-// void verlet_test_2(mdsys_t* sys) {
-// 	int i;
-// 	for (i = 0; i < sys->natoms; ++i) {
-// 		sys->vx[i] += 0.5 * sys->fx[i] / sys->mass;
-// 	}
-// }
-
-
