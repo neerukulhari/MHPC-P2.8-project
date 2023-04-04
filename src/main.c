@@ -4,7 +4,6 @@
  *
  * baseline c version.
  */
-//#include "variables.h"
 #include "prototypes.h"
 #include "utilities.h"
 
@@ -17,74 +16,59 @@ int main(int argc, char **argv)
     mdsys_t sys;
     double t_start;
 
-    printf("LJMD version %3.1f\n", LJMD_VERSION);
+    #ifdef _MPI
+    MPI_Init(NULL, NULL);
+    #endif
+    fill_mpi_struct(&sys);
+    
+    if (sys.mpirank==0) printf("LJMD version %3.1f\n", LJMD_VERSION);
 
     t_start = wallclock();
 
     /* read input file */
-    if(get_a_line(stdin,line)) return 1;
-    sys.natoms=atoi(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.mass=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.epsilon=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.sigma=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.rcut=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.box=atof(line);
-    if(get_a_line(stdin,restfile)) return 1;
-    if(get_a_line(stdin,trajfile)) return 1;
-    if(get_a_line(stdin,ergfile)) return 1;
-    if(get_a_line(stdin,line)) return 1;
-    sys.nsteps=atoi(line);
-    if(get_a_line(stdin,line)) return 1;
-    sys.dt=atof(line);
-    if(get_a_line(stdin,line)) return 1;
-    nprint=atoi(line);
+    if (sys.mpirank==0) add_data(stdin, &line, &restfile, &trajfile, &ergfile, &sys, &nprint);
+    broadcast_data(&sys);
 
     /* allocate memory */
-    sys.rx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.ry=(double *)malloc(sys.natoms*sizeof(double));
-    sys.rz=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vy=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vz=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fy=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fz=(double *)malloc(sys.natoms*sizeof(double));
 
-    /* read restart */
-    fp=fopen(restfile,"r");
-    if(fp) {
-        for (i=0; i<sys.natoms; ++i) {
-            fscanf(fp,"%lf%lf%lf",sys.rx+i, sys.ry+i, sys.rz+i);
+    allocate_mem(&sys);
+
+    if(sys.mpirank==0) {
+        /* read restart */
+        fp=fopen(restfile,"r");
+        if(fp) {
+            for (i=0; i<sys.natoms; ++i) {
+                fscanf(fp,"%lf%lf%lf",sys.rx+i, sys.ry+i, sys.rz+i);
+            }
+            for (i=0; i<sys.natoms; ++i) {
+                fscanf(fp,"%lf%lf%lf",sys.vx+i, sys.vy+i, sys.vz+i);
+            }
+            fclose(fp);
+            azzero(sys.fx, sys.natoms);
+            azzero(sys.fy, sys.natoms);
+            azzero(sys.fz, sys.natoms);
+        } else {
+            perror("cannot read restart file");
+            return 3;
         }
-        for (i=0; i<sys.natoms; ++i) {
-            fscanf(fp,"%lf%lf%lf",sys.vx+i, sys.vy+i, sys.vz+i);
-        }
-        fclose(fp);
-        azzero(sys.fx, sys.natoms);
-        azzero(sys.fy, sys.natoms);
-        azzero(sys.fz, sys.natoms);
-    } else {
-        perror("cannot read restart file");
-        return 3;
     }
 
     /* initialize forces and energies.*/
     sys.nfi=0;
-    force(&sys);
-    ekin(&sys);
 
-    erg=fopen(ergfile,"w");
-    traj=fopen(trajfile,"w");
+    force_optimized_3Law(&sys);
+    
+    if (sys.mpirank==0) {
+        ekin(&sys);
 
-    printf("Startup time: %10.3fs\n", wallclock()-t_start);
-    printf("Starting simulation with %d atoms for %d steps.\n",sys.natoms, sys.nsteps);
-    printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
-    output(&sys, erg, traj);
+        erg=fopen(ergfile,"w");
+        traj=fopen(trajfile,"w");
+
+        printf("Startup time: %10.3fs\n", wallclock()-t_start);
+        printf("Starting simulation with %d atoms for %d steps.\n",sys.natoms, sys.nsteps);
+        printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
+        output(&sys, erg, traj);
+    }
 
     /* reset timer */
     t_start = wallclock();
@@ -94,29 +78,22 @@ int main(int argc, char **argv)
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
 
         /* write output, if requested */
-        if ((sys.nfi % nprint) == 0)
+        if ((sys.nfi % nprint) == 0 && sys.mpirank==0)
             output(&sys, erg, traj);
 
         /* propagate system and recompute energies */
         velverlet(&sys);
-        ekin(&sys);
+        if (sys.mpirank==0) ekin(&sys);
+
     }
     /**************************************************/
+    if (sys.mpirank==0) {
+        /* clean up: close files, free memory */
+        printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
+        fclose(erg);
+        fclose(traj);
+    }
 
-    /* clean up: close files, free memory */
-    printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
-    fclose(erg);
-    fclose(traj);
-
-    free(sys.rx);
-    free(sys.ry);
-    free(sys.rz);
-    free(sys.vx);
-    free(sys.vy);
-    free(sys.vz);
-    free(sys.fx);
-    free(sys.fy);
-    free(sys.fz);
-
+    free_mem(&sys);
     return 0;
 }
