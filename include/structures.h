@@ -14,6 +14,8 @@ struct _mdsys
     /* added for MPI */
     double *cx, *cy, *cz; 
     int mpirank, mpisize, mpicomm;
+	/* added for openMP */
+	int nthreads;
 };
 typedef struct _mdsys mdsys_t;
 

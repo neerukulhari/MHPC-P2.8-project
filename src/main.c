@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     #ifdef _MPI
     MPI_Init(NULL, NULL);
     #endif
-    fill_mpi_struct(&sys);
+    fill_struct(&sys);
     
     if (sys.mpirank==0) printf("LJMD version %3.1f\n", LJMD_VERSION);
 

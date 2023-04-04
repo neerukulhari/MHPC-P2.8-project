@@ -101,8 +101,8 @@ void free_mem(mdsys_t* const sys) {
     #endif
 }
 
-/* Fill the MPI struct parameters*/
-void fill_mpi_struct(mdsys_t *sys)
+/* Fill the MPI and openMP struct parameters*/
+void fill_struct(mdsys_t *sys)
 {
     #ifdef _MPI
     MPI_Comm_rank(MPI_COMM_WORLD, &(sys->mpirank));
@@ -110,6 +110,11 @@ void fill_mpi_struct(mdsys_t *sys)
     #else
     sys->mpirank = 0;
     sys->mpisize = 1;
+    #endif
+    #ifdef _OPENMP
+    sys->nthreads = omp_get_max_threads();
+    #else
+    sys->nthreads = 1;
     #endif
 }
 
