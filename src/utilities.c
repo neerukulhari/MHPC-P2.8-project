@@ -61,26 +61,14 @@ void free_mem(mdsys_t* const sys) {
 	free(sys->rx);
 	free(sys->ry);
 	free(sys->rz);
-	// sys->rx = NULL;
-	// sys->ry = NULL;
-	// sys->rz = NULL;
 
 	// free velocities
 	free(sys->vx);
 	free(sys->vy);
 	free(sys->vz);
-	// sys->vx = NULL;
-	// sys->vy = NULL;
-	// sys->vz = NULL;
 
 	// free forces
 	free(sys->fx);
 	free(sys->fy);
 	free(sys->fz);
-	// sys->fx = NULL;
-	// sys->fy = NULL;
-	// sys->fz = NULL;
-
-	
 }
-
