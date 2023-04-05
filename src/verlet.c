@@ -1,8 +1,11 @@
 #include "prototypes.h"
 #include "constants.h"
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 
 // Split into two functions to avoid the overhead of function calls
-
 void velverlet_propagation(mdsys_t* sys) 
 {
 // Propagate velocities by half and positions by full step
@@ -10,6 +13,9 @@ void velverlet_propagation(mdsys_t* sys)
     int N_atoms = sys->natoms;
     const double mass_factor = 0.5 * sys->dt / (mvsq2e * sys->mass);
 
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i)
+    #endif
     for (i = 0; i < N_atoms; ++i) 
     {
         sys->vx[i] += mass_factor * sys->fx[i];
@@ -30,6 +36,9 @@ void velverlet_update(mdsys_t* sys)
 
     const double mass_factor = 0.5 * sys->dt / (mvsq2e * sys->mass);
 
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i)
+    #endif
     for (i = 0; i < N_atoms; ++i) 
     {
         sys->vx[i] += mass_factor * sys->fx[i];
