@@ -7,9 +7,6 @@
 #endif
 void force(mdsys_t *sys)
 {
-    #ifdef _OPENMP
-    int Nthreads = omp_get_max_threads();
-    #endif
     double r, ffac;
     double rx, ry, rz;
     int i, j;
@@ -31,6 +28,9 @@ void force(mdsys_t *sys)
     for (i = sys->mpirank; i < (sys->natoms); i += sys->mpisize)
     {
     #else
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,r,ffac,rx,ry,rz) reduction(+:epot)
+    #endif
     for (i = 0; i < (sys->natoms); ++i)
     {
     #endif
@@ -118,6 +118,9 @@ void force_optimized_3Law(mdsys_t *sys)
     for (i = sys->mpirank; i < (sys->natoms); i += sys->mpisize)
     {
     #else
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,r,ffac,rx,ry,rz) reduction(+:epot)
+    #endif
     for (i = 0; i < (sys->natoms - 1); ++i)
     {
     #endif
