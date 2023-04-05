@@ -119,7 +119,7 @@ void force_optimized_3Law(mdsys_t *sys)
     {
     #else
     #ifdef _OPENMP
-    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,r,ffac,rx,ry,rz) reduction(+:epot)
+    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,rsq,ffac,rx,ry,rz) reduction(+:epot)
     #endif
     for (i = 0; i < (sys->natoms - 1); ++i)
     {
