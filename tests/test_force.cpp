@@ -37,7 +37,7 @@ TEST(ForceTest, TwoParticleInsideCutoff) {
     sys.rz[1] = 1.5;
     
     /* call the force routine */
-    force(&sys);
+    force_optimized_3Law(&sys);
     
     /* check the results */
     EXPECT_NEAR(sys.epot, 12.99314, 1e-5);
@@ -97,7 +97,7 @@ TEST(ForceTest, ThreeParticleInsideCutoff) {
     sys.rz[2] = 2.0;
     
     /* call the force routine */
-    force(&sys);
+    force_optimized_3Law(&sys);
     
     /* check the results */
     EXPECT_NEAR(sys.epot, 25.84362, 1e-5);
@@ -157,7 +157,7 @@ TEST(ForceTest, TwoParticleOutsideCutoff) {
     sys.rz[1] = 3.5;
     
     /* call the force routine */
-    force(&sys);
+    force_optimized_3Law(&sys);
     
     /* check the results */
     EXPECT_NEAR(sys.epot, -0.01296, 1e-5);
@@ -217,7 +217,7 @@ TEST(ForceTest, ThreeParticleOutsideCutoff) {
     sys.rz[2] = 4.0;
     
     /* call the force routine */
-    force(&sys);
+    force_optimized_3Law(&sys);
     
     /* check the results */
     EXPECT_NEAR(sys.epot, 12.99314, 1e-5);
