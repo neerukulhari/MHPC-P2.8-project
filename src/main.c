@@ -6,10 +6,13 @@
  */
 #include "prototypes.h"
 #include "utilities.h"
-
+#ifdef _OPENMP
+    #include <omp.h>
+#endif
 /* main */
 int main(int argc, char **argv)
-{
+{   
+
     int nprint, i;
     char restfile[BLEN], trajfile[BLEN], ergfile[BLEN], line[BLEN];
     FILE *fp,*traj,*erg;
@@ -19,7 +22,7 @@ int main(int argc, char **argv)
     #ifdef _MPI
     MPI_Init(NULL, NULL);
     #endif
-    fill_mpi_struct(&sys);
+    fill_struct(&sys);
     
     if (sys.mpirank==0) printf("LJMD version %3.1f\n", LJMD_VERSION);
 
@@ -75,6 +78,7 @@ int main(int argc, char **argv)
 
     /**************************************************/
     /* main MD loop */
+
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
 
         /* write output, if requested */

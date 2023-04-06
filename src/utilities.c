@@ -1,6 +1,9 @@
 #include "utilities.h"
 #include <sys/time.h>
 #include <time.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 #ifdef _MPI
 #include <mpi.h>
 #endif
@@ -8,6 +11,7 @@
 /* helper function: get current time in seconds since epoch */
 double wallclock() 
 {
+   
 	struct timeval t; 
 	gettimeofday(&t, 0);
 	return ((double)t.tv_sec) + 1.0e-6 * ((double)t.tv_usec);
@@ -16,8 +20,12 @@ double wallclock()
 /* helper function: zero out an array */
 // Loop unrolling 2x2 is applied for step+=2
 void azzero(double* d, const int n) 
-{       
+{    
     int i;
+    #ifdef _OPENMP
+    int Nthreads = omp_get_max_threads();
+    #pragma omp parallel for num_threads(Nthreads) private(i)
+    #endif
     for (i=0; i<n-1; i+=2) 
     {
         d[i]=0.0;
@@ -91,8 +99,8 @@ void free_mem(mdsys_t* const sys) {
     #endif
 }
 
-/* Fill the MPI struct parameters*/
-void fill_mpi_struct(mdsys_t *sys)
+/* Fill the MPI and openMP struct parameters*/
+void fill_struct(mdsys_t *sys)
 {
     #ifdef _MPI
     MPI_Comm_rank(MPI_COMM_WORLD, &(sys->mpirank));
@@ -100,6 +108,11 @@ void fill_mpi_struct(mdsys_t *sys)
     #else
     sys->mpirank = 0;
     sys->mpisize = 1;
+    #endif
+    #ifdef _OPENMP
+    sys->nthreads = omp_get_max_threads();
+    #else
+    sys->nthreads = 1;
     #endif
 }
 

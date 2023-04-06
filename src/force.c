@@ -2,7 +2,9 @@
 
 #include "prototypes.h"
 #include "utilities.h"
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 void force(mdsys_t *sys)
 {
     double r, ffac;
@@ -26,6 +28,9 @@ void force(mdsys_t *sys)
     for (i = sys->mpirank; i < (sys->natoms); i += sys->mpisize)
     {
     #else
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,r,ffac,rx,ry,rz) reduction(+:epot)
+    #endif
     for (i = 0; i < (sys->natoms); ++i)
     {
     #endif
@@ -113,6 +118,9 @@ void force_optimized_3Law(mdsys_t *sys)
     for (i = sys->mpirank; i < (sys->natoms); i += sys->mpisize)
     {
     #else
+    #ifdef _OPENMP
+    #pragma omp parallel for num_threads(sys->nthreads) private(i,j,rsq,ffac,rx,ry,rz) reduction(+:epot)
+    #endif
     for (i = 0; i < (sys->natoms - 1); ++i)
     {
     #endif
