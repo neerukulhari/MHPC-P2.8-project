@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     /* initialize forces and energies.*/
     sys.nfi=0;
 
-    force_optimized_3Law(&sys);
+    force_optimized(&sys);
     
     ekin(&sys);
 

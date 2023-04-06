@@ -1,0 +1,9 @@
+Without forces
+3.693s       129.658s
+
+With forces
+549.369s            126.954s
+
+Newton
+254.153s            73.456s   
+1000000             1000 
