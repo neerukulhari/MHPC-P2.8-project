@@ -25,9 +25,18 @@ Use one of the following commands depending on the desired build option:
 3. The openMP implementation of the optimized version, created by Andrea Stacchetti. Command: `make omp`; 
 4. The MPI implementation of the optimized version, created by Iara Ota. Command: `make mpi`; 
 5. The hybrid version with openMP and MPI implementation. Command `make hybrid`.
-6. Run google tests. Command: `make test`
+6. The google tests. Command: `make unittest`
 
 To clean the project and remove all executables and object files, use the command `make clean`.
+
+### Run the unit tests:
+To execute the unit tests, you need to compile both the tests and one version (excluding the non-optimized serial version). For example, you can run the following commands:
+```bash
+make unittest
+make optimized
+make test
+``` 
+These commands will compile the necessary code for the unit tests and the optimized version, allowing you to run the tests to verify the functionality of the program.
 
 # Directory Structure
 
