@@ -24,6 +24,11 @@ jobs:
       # Install Google Test
       run: sudo apt-get install libgtest-dev
 
+    - name: Install MPICH
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mpich libmpich-dev
+        
     - name: Set up MPI
       uses: microsoft/setup-mpich@v1
 
