@@ -24,8 +24,13 @@ jobs:
       # Install Google Test
       run: sudo apt-get install libgtest-dev
       
+    - name: Install OpenMPI
+      run: sudo apt-get install -y openmpi-bin libopenmpi-dev
+
     - name: Setup OpenMPI
-      uses: actions/setup-openmpi@v2
+      run: |
+        echo "export OMPI_CC=$(which mpicc)" >> $GITHUB_ENV
+        echo "export OMPI_CXX=$(which mpicxx)" >> $GITHUB_ENV
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
