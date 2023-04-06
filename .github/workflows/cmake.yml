@@ -23,16 +23,9 @@ jobs:
     - name: Install GTest
       # Install Google Test
       run: sudo apt-get install libgtest-dev
-
-    - name: Install MPICH
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mpich libmpich-dev
-        
-    - name: Set up MPI
-      uses: actions/setup-openmpi@v1
-
-
+      
+    - name: Set up OpenMPI
+      uses: docker://ghcr.io/nvidia/openmpi:4.1.0-cuda11.4-devel-ubuntu20.04
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
