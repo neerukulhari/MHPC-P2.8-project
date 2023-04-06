@@ -39,10 +39,10 @@ These commands will compile the necessary code for the unit tests and the optimi
 
 # Directory Structure
 
-`src`: Contains the source code for the ljdm simulation.
-`include`: Contains header files for the ljdm simulation.
-`examples`: Contains examples for input files for the ljdm simulation.
-`reference`: Contains the reference solution for the inputs in the `example` folder.
-`tests`: Contains google tests for the ljdm simulation.
-`Report`: Contains the final report for the benchmark of the project.
-`Obj` and `Obj-serial`: Contains the object files generated during compilation.
+- `src`: Contains the source code for the ljdm simulation.
+- `include`: Contains header files for the ljdm simulation.
+- `examples`: Contains examples for input files for the ljdm simulation.
+- `reference`: Contains the reference solution for the inputs in the `example` folder.
+- `tests`: Contains google tests for the ljdm simulation.
+- `Report`: Contains the final report for the benchmark of the project.
+- `Obj` and `Obj-serial`: Contains the object files generated during compilation.
