@@ -1,54 +1,40 @@
-# To compile using cmake
+# MHPC P2.8 project: ljdm Simulation Optimization and Parallelization
+The contents of this package include an MD code for the simulation of atoms using a Lennard-Jones potential that has been optimized with multi-threading parallelization.
+The tasks were divided as follows:
 
-```bash
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
+1. Refactoring and optimizing for single-core performance, assigned to Neeraj Kulhari; 
+2. openMP parallelization, assigned to Andrea Stacchetti; 
+3. MPI parallelization, assigned to Iara Ota.
 
-## Cmake options:
-```bash
-make 
-make serial 
-make parallel
-make check
-```
+# How to Use the Code
 
-To use the cmake tests:
-```bash
-cd examples
-ctest
-```
+To use the code, follow the following steps.
 
+### Clone the repository:
+- Clone the repository using the command `git clone https://github.com/iaraota/MHPC-P2.8-project.git`.
+- Navigate to the project folder: `cd MHPC-P2.8-project`
 
-# Old README
+### Configure the Makefiles:
+- Create a build folder and navigate to it: `mkdir build && cd build` 
+- Run `cmake ..` to configure the project.
 
-To compile without a make file do the following:
+### Build the project:
+Use one of the following commands depending on the desired build option:
+1. The non-optimized serial code, which was provided by Dr. Axel Kohlmeyer. Command: `make serial`; 
+2. The optimized version, created by Neeraj Kulhari. Command: `make optimized`; 
+3. The openMP implementation of the optimized version, created by Andrea Stacchetti. Command: `make omp`; 
+4. The MPI implementation of the optimized version, created by Iara Ota. Command: `make mpi`; 
+5. The hybrid version with openMP and MPI implementation. Command `make hybrid`.
+6. Run google tests. Command: `make test`
 
-```bash
-mkdir build
-cd build
-gcc ../src/*.c -I ../include -L ../include -o ljmd-serial.x -DLJMD_VERSION=1.0 -lm
+To clean the project and remove all executables and object files, use the command `make clean`.
 
-Optim
--ffast-math -fexpensive-optimizations -msse3
--O3 -ffast-math -fomit-frame-pointer -fexpensive-optimizations -msse3 -Wall
-```
+# Directory Structure
 
-Then to test if it runs correctly go to the examples folder and run the tests:
-```bash
-cd ../../examples
-sh ../LJMD_serial/tests/check_argon108.sh
-sh ../LJMD_serial/tests/check_argon2916.sh
-```
-
-The result should print **"The argon_# simulation was executed without errors."**
-
-# To compile and run the tests
-Go to the build directory, compile the test files and run it:
-```bash
-cd build
-g++ -std=c++17 $(ls ../src/*.c | grep -v 'main.c') ../tests/*.cpp -I../include -L../include -lgtest -lgtest_main -pthread -o test.x
-./test.x
-```
+`src`: Contains the source code for the ljdm simulation.
+`include`: Contains header files for the ljdm simulation.
+`examples`: Contains examples for input files for the ljdm simulation.
+`reference`: Contains the reference solution for the inputs in the `example` folder.
+`tests`: Contains google tests for the ljdm simulation.
+`Report`: Contains the final report for the benchmark of the project.
+`Obj` and `Obj-serial`: Contains the object files generated during compilation.
