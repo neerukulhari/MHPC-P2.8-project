@@ -30,7 +30,8 @@ jobs:
         sudo apt-get install -y mpich libmpich-dev
         
     - name: Set up MPI
-      uses: microsoft/setup-mpich@v1
+      uses: actions/setup-openmpi@v1
+
 
 
     - name: Configure CMake
