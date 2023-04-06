@@ -1,5 +1,5 @@
 # Report for the LJMD Project
-This report outlines the approach taken to benchmark the LJMD code and presents the corresponding findings. The benchmarking process involved three distinct tasks: (1) [refactoring and optimizing](#optimization-of-the-serial-code) for single-core performance, which was assigned to Neeraj Kulhari; (2) [openMP parallelization](parallelization-openmp), which was assigned to Andrea Stacchetti; and (3) [MPI parallelization](parallelization-mpi), which was assigned to Iara Ota;
+This report outlines the approach taken to benchmark the LJMD code and presents the corresponding findings. The benchmarking process involved three distinct tasks: (1) [refactoring and optimizing](#optimization-of-the-serial-code) for single-core performance, which was assigned to Neeraj Kulhari; (2) [openMP parallelization](#parallelization-openmp), which was assigned to Andrea Stacchetti; and (3) [MPI parallelization](#parallelization-mpi), which was assigned to Iara Ota;
 
 ## Optimization of the Serial Code
 
