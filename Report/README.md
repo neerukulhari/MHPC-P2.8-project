@@ -4,9 +4,9 @@ This report outlines the approach taken to benchmark the LJMD code and presents 
 ## Optimization of the Serial Code
 
 The initial step in our performance optimization process involved the utilization of compiler optimization flags. 
-Specifically, we increased the optimization level from [-O2] to [-O3] and included the flags [-fomit-frame-pointer] and [-msse3].
-Subsequently, we explored additional optimization techniques, such as substituting computationally expensive mathematical operations with faster alternatives (e.g., minimizing the number of calls to the [sqrt] function and [division] operations).
-Additionally, we aimed to improve the data structure to enhance memory access and prevent memory aliasing. [Loop] unrolling was employed in the azzero function, and we introduced prefactors in the ekin, verlet, and force functions to eliminate repetitive operations. 
+Specifically, we increased the optimization level from `-O2` to `-O3` and included the flags `-fomit-frame-pointer` and `-msse3`.
+Subsequently, we explored additional optimization techniques, such as substituting computationally expensive mathematical operations with faster alternatives (e.g., minimizing the number of calls to the `sqrt` function and `division` operations).
+Additionally, we aimed to improve the data structure to enhance memory access and prevent memory aliasing. `Loop` unrolling was employed in the azzero function, and we introduced prefactors in the ekin, verlet, and force functions to eliminate repetitive operations. 
 
 In the final stage of optimization, we leveraged our physical understanding of the system to further refine the force calculation process. Specifically, we applied [Newton's] [third] [law] to optimize the calculation of the pairwise interaction force between particles. This involved updating the force calculation such that each force calculation between two particles is only computed once, which significantly reduced the total number of calculations and subsequently improved runtime.
 
