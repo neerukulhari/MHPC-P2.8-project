@@ -1,0 +1,5 @@
+if(EXISTS "/home/neeraj/Desktop/MHPC/MHPC-P2.8-project/build/tests/GoogleTests[1]_tests.cmake")
+  include("/home/neeraj/Desktop/MHPC/MHPC-P2.8-project/build/tests/GoogleTests[1]_tests.cmake")
+else()
+  add_test(GoogleTests_NOT_BUILT GoogleTests_NOT_BUILT)
+endif()
