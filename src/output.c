@@ -2,7 +2,8 @@
 
 /* append data to output. */
 void output(mdsys_t* sys, FILE* erg, FILE* traj)
-{
+{ 
+
     int i;
 
     printf("% 8d % 20.8f % 20.8f % 20.8f % 20.8f\n", sys->nfi, sys->temp, sys->ekin, sys->epot, sys->ekin+sys->epot);

@@ -1,50 +1,48 @@
-# To compile using cmake
+# MHPC P2.8 project: ljdm Simulation Optimization and Parallelization
+The contents of this package include an MD code for the simulation of atoms using a Lennard-Jones potential, which non-optimized serial version was provided by Dr. Axel Kohlmeyer, that has been optimized with multi-threading parallelization.
+The tasks were divided as follows:
 
+1. Refactoring and optimizing for single-core performance, assigned to Neeraj Kulhari; 
+2. openMP parallelization, assigned to Andrea Stacchetti; 
+3. MPI parallelization, assigned to Iara Ota.
+
+# How to Use the Code
+
+To use the code, follow the following steps.
+
+### Clone the repository:
+- Clone the repository using the command `git clone https://github.com/iaraota/MHPC-P2.8-project.git`.
+- Navigate to the project folder: `cd MHPC-P2.8-project`
+
+### Configure the Makefiles:
+- Create a build folder and navigate to it: `mkdir build && cd build` 
+- Run `cmake ..` to configure the project.
+
+### Build the project:
+Use one of the following commands depending on the desired build option:
+1. The optimized version, created by Neeraj Kulhari. Command: `make optimized`; 
+2. The openMP implementation of the optimized version, created by Andrea Stacchetti. Command: `make omp`; 
+3. The MPI implementation of the optimized version, created by Iara Ota. Command: `make mpi`; 
+4. The hybrid version with openMP and MPI implementation. Command `make hybrid`.
+5. The google tests. Command: `make unittest`
+
+To clean the project and remove all executables and object files, use the command `make clean`.
+
+### Run the unit tests:
+To execute the unit tests, you need to compile both the tests and one version. For example, you can run the following commands:
 ```bash
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
+make unittest
+make optimized
+make test
+``` 
+These commands will compile the necessary code for the unit tests and the optimized version, allowing you to run the tests to verify the functionality of the program.
 
-## Cmake options:
-```bash
-make 
-make serial 
-make parallel
-make check
-```
+# Directory Structure
 
-To use the cmake tests:
-```bash
-cd examples
-ctest
-```
-
-
-# Old README
-
-To compile without a make file do the following:
-
-```bash
-mkdir build
-cd build
-gcc ../src/*.c -I ../include -L ../include -o ljmd-serial.x -DLJMD_VERSION=1.0 -lm
-```
-
-Then to test if it runs correctly go to the examples folder and run the tests:
-```bash
-cd ../../examples
-sh ../LJMD_serial/tests/check_argon108.sh
-sh ../LJMD_serial/tests/check_argon2916.sh
-```
-
-The result should print **"The argon_# simulation was executed without errors."**
-
-# To compile and run the tests
-Go to the build directory, compile the test files and run it:
-```bash
-cd build
-g++ -std=c++17 $(ls ../src/*.c | grep -v 'main.c') ../tests/*.cpp -I../include -L../include -lgtest -lgtest_main -pthread -o test.x
-./test.x
-```
+`src`: Contains the source code for the ljdm simulation.
+`include`: Contains header files for the ljdm simulation.
+`examples`: Contains examples for input files for the ljdm simulation.
+`reference`: Contains the reference solution for the inputs in the `example` folder.
+`tests`: Contains google tests for the ljdm simulation.
+`Report`: Contains the final report for the benchmark of the project.
+`Obj` and `Obj-serial`: Contains the object files generated during compilation.

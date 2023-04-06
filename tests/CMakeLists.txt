@@ -28,3 +28,7 @@ target_link_libraries(GoogleTests ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
 enable_testing()
 
 GTEST_DISCOVER_TESTS(GoogleTests)
+
+# add unittest target
+add_custom_target(unittest DEPENDS GoogleTests
+    COMMENT "Running unit tests")
