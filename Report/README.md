@@ -16,11 +16,11 @@ Finally, we present the runtime results for the Argon_108 and Argon_2916 simulat
 
 ![OPT-2916](figs/opt_2916.png "OPT - Argon 2916 atoms for 1000 MD steps")
 
-The plot shows the time taken for different optimization types to complete a simulation of Argon 108 atoms using `1,000,000 steps` and Argon 2916 atoms using `1000 steps`. The time taken for the Newtons Optimized forces was less than a minute for 10,000 steps of Argon 108 atoms.
+The plot shows the time taken for different optimization types to complete a simulation of Argon 108 atoms using **1,000,000 steps** and Argon 2916 atoms using **1000 steps**. The time taken for the Newtons Optimized forces was less than a minute for 10,000 steps of Argon 108 atoms.
 
 However, if we were to measure the time taken in seconds for fewer steps, the difference in time taken between the optimization types would be very small. This is because the simulation time taken is proportional to the number of steps taken, and the number of steps taken in this case is very large.
 
-Measuring the time taken in seconds could introduce errors due to the limitations of the timing function used and the variation in the computer's processing power. `Hence, measuring the time taken in minutes provides a more accurate representation of the time taken for the simulations`.
+Measuring the time taken in seconds could introduce errors due to the limitations of the timing function used and the variation in the computer's processing power. **Hence, measuring the time taken in minutes provides a more accurate representation of the time taken for the simulations**.
 
 Our optimization efforts have primarily focused on enhancing the force and Verlet functions since these two functions serve as the heart of the LJMD code. Specifically, the force function calculates the forces that particles exert on each other, and the Verlet function integrates the equations of motion to update the positions and velocities of the particles. As such, optimizing these two functions can have a significant impact on the overall performance of the code.
 
